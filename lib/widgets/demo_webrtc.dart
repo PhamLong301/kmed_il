@@ -27,12 +27,12 @@ class _DemoWebRTCState extends State<_DemoWebRTC> {
   bool _offer = false;
   RTCPeerConnection? _peerConnection;
   MediaStream? _localStream;
-  RTCVideoRenderer  _localRenderer = new RTCVideoRenderer();
-  RTCVideoRenderer  _remoteRenderer = new RTCVideoRenderer();
+  final RTCVideoRenderer  _localRenderer = RTCVideoRenderer();
+  final RTCVideoRenderer  _remoteRenderer = RTCVideoRenderer();
 
   final sdpController = TextEditingController();
   @override
-  dispode(){
+  dispose(){
     _localRenderer.dispose();
     _remoteRenderer.dispose();
     super.dispose();
@@ -41,7 +41,7 @@ class _DemoWebRTCState extends State<_DemoWebRTC> {
   @override
   void initState() {
     initRenderer();
-    _createPeerConnecion().then((pc) {
+    _createPeerConnection().then((pc) {
       _peerConnection = pc;
     });
     // _getUserMedia();
@@ -52,7 +52,7 @@ class _DemoWebRTCState extends State<_DemoWebRTC> {
     await _localRenderer.initialize();
     await _remoteRenderer.initialize();
   }
-  _createPeerConnecion() async {
+  _createPeerConnection() async {
     Map<String, dynamic> configuration = {
       "iceServers": [
         {"url": "stun:stun.l.google.com:19302"},
